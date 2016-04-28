@@ -46,6 +46,43 @@
 //---- User Configurable Pin Definitions for ATMegaXXX0 Variants -----
 //Warning: D30 to D37 inclusive are NOT allowed
 
+// use RAMPS based hardware approach, RA=0=X, DC=1=Y
+#define RAMPSv14
+
+#ifdef RAMPSv14
+// RAMPS v1.4 used as stepper interface
+//GPIO Pins:
+#define gpioPin_0_Define 21  //IO0 [ATMega PD0] - Interrupt Capable
+#define gpioPin_1_Define 22  //IO1 [ATMega PA0] - GPIO Pin
+#define gpioPin_2_Define 23  //IO2 [ATMega PA1] - GPIO Pin
+
+//Status Pins:
+#define statusPin_Define 13
+
+//Motor Driver Pins:
+#define resetPin_0_Define 57 // Analog 3, not used
+#define resetPin_1_Define 58 // Analog 4, not used
+
+#define dirPin_0_Define 55 // Analog 1
+#define dirPin_1_Define 61 // Analog 7
+
+#define enablePin_0_Define 38 // D38
+#define enablePin_1_Define 56 // Analog 2
+
+#define stepPin_0_Define 54 // Analog 0
+#define stepPin_1_Define 60 // Analog 6
+
+// we are using end stop pins for mode select - additional wiring needed!
+#define modePins0_0_Define 3
+#define modePins1_0_Define 2
+#define modePins2_0_Define 14
+#define modePins0_1_Define 15
+#define modePins1_1_Define 18
+#define modePins2_1_Define 19
+
+#else
+// Standard ARD hardware
+
 //GPIO Pins:
 #define gpioPin_0_Define 21  //IO0 [ATMega PD0] - Interrupt Capable
 #define gpioPin_1_Define 22  //IO1 [ATMega PA0] - GPIO Pin
@@ -74,6 +111,7 @@
 #define modePins1_1_Define 19
 #define modePins2_1_Define 18
 
+#endif
 //ST4 Pins:
 //#define ALTERNATE_ST4 //Uncomment this line to use the alternate mapping for the ST4 port, using A8 to A11 instead of 50 to 53
 
