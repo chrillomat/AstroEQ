@@ -29,7 +29,15 @@
 #include <util/delay.h>    
 #include <avr/wdt.h>
 
-
+// this is for simulation with simulavr
+//#include "../../simulavr/src/simulavr_info.h"
+#include "avr/signature.h"
+#include "simulavr_info.h"
+//SIMINFO_DEVICE("atmega1280");
+SIMINFO_DEVICE("atmega2560");
+SIMINFO_CPUFREQUENCY(F_CPU);
+SIMINFO_SERIAL_IN("D0", "-", 9600);
+SIMINFO_SERIAL_OUT("D1", "-", 9600);
 
 
 /*
