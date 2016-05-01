@@ -53,8 +53,8 @@
 // RAMPS v1.4 used as stepper interface
 //GPIO Pins:
 #define gpioPin_0_Define 21  //IO0 [ATMega PD0] - Interrupt Capable
-#define gpioPin_1_Define 22  //IO1 [ATMega PA0] - GPIO Pin
-#define gpioPin_2_Define 23  //IO2 [ATMega PA1] - GPIO Pin
+#define gpioPin_1_Define 2   // standalone mode enable
+#define gpioPin_2_Define 3   // standalone mode speed select
 
 //Status Pins:
 #define statusPin_Define 13
@@ -72,13 +72,13 @@
 #define stepPin_0_Define 54 // Analog 0
 #define stepPin_1_Define 60 // Analog 6
 
-// we are using end stop pins for mode select - additional wiring needed!
-#define modePins0_0_Define 3
-#define modePins1_0_Define 2
-#define modePins2_0_Define 14
-#define modePins0_1_Define 15
-#define modePins1_1_Define 18
-#define modePins2_1_Define 19
+// we are using AUX2 pins for mode select - additional wiring needed!
+#define modePins0_0_Define 59 // Analog 5
+#define modePins1_0_Define 64 // Analog 10
+#define modePins2_0_Define 44
+#define modePins0_1_Define 63 // Analog 9
+#define modePins1_1_Define 40
+#define modePins2_1_Define 42
 
 #else
 // Standard ARD hardware
