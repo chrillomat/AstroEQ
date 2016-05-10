@@ -143,16 +143,17 @@ byte synta_hexToByte(char* hex){
     return hexToByte(hex);
 }
 unsigned long synta_hexToLong(char* hex){
-    //  char *boo; //waste point for strtol
-    //  char str[7]; //Destination of rearranged hex
-    //  strncpy(str,&hex[4],2); //Lower Byte
-    //  strncpy(str+2,&hex[2],2); //Middle Byte
-    //  strncpy(str+4,hex,2); //Upper Byte
-    //  str[6] = 0;
-    //  return strtol(str,&boo,16); //convert hex to long integer
-
-    Inter inter = Inter(0,hexToByte(hex+4),hexToByte(hex+2),hexToByte(hex)); //create an inter 
-    return inter.integer; //and convert it to an integer
+  // TODO: this is working with avr-gcc on linux
+      char *boo; //waste point for strtol
+      char str[7]; //Destination of rearranged hex
+      strncpy(str,&hex[4],2); //Lower Byte
+      strncpy(str+2,&hex[2],2); //Middle Byte
+      strncpy(str+4,hex,2); //Upper Byte
+      str[6] = 0;
+      return strtol(str,&boo,16); //convert hex to long integer
+  // TODO: this is not working
+    //Inter inter = Inter(0,hexToByte(hex+4),hexToByte(hex+2),hexToByte(hex)); //create an inter 
+    //return inter.integer; //and convert it to an integer
 }
 
 char synta_command(){
