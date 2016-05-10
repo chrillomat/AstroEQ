@@ -69,7 +69,10 @@ void Serial_initialise(const unsigned long baud){
 }
 
 byte Serial_available(void){
-    return ((rxBuf.head - rxBuf.tail) & 0x3F); //number of bytes available
+  // TODO: add read of UCSRnA (n=0) to workaround simavr issue https://github.com/buserror/simavr/issues/104
+  //if(UCSRnA & (1<<UDRE0)) return ((rxBuf.head - rxBuf.tail) & 0x3F); //number of bytes available
+  //else return ((rxBuf.head - rxBuf.tail) & 0x3F);
+  return ((rxBuf.head - rxBuf.tail) & 0x3F);
 }
 
 char Serial_read(void){
