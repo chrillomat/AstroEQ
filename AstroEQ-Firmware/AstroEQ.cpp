@@ -417,6 +417,14 @@ int main(void) {
     PCMSK0 =  0xF0; //PCINT[4..7]
     PCICR &= ~_BV(PCIE1); //disable PCInt[8..15] vector
     PCICR |=  _BV(PCIE0); //enable  PCInt[0..7]  vector
+#elif defined(RAMPSv14)
+    //For ATMega1280/2560 with RAMPS
+    PCMSK1 =  0x06; //PCINT[9..10]
+    PCICR &= ~_BV(PCIE2); //disable  PCInt[16..23] vector
+    PCICR |= _BV(PCIE1);  //enable PCInt[8..15]  vector
+    PCICR &= ~_BV(PCIE0); //disable PCInt[0..7]   vector
+    EICRB = 0x05; // INT4/5, interrupt on any change
+    EIMSK = 0x30; // INT4/5 enabled
 #elif defined(ALTERNATE_ST4)
     //For ATMega1280/2560 with Alterante ST4 pins
     PCMSK2 =  0x0F; //PCINT[16..23]
@@ -1014,8 +1022,13 @@ void configureTimer(){
   
 }
 
+// RAMPSv14
 #ifdef ALTERNATE_ST4
 ISR(PCINT2_vect)
+#elif defined(RAMPSv14)
+ISR(INT4_vect, ISR_ALIASOF(PCINT1_vect));
+ISR(INT5_vect, ISR_ALIASOF(PCINT1_vect));
+ISR(PCINT1_vect)
 #else
 ISR(PCINT0_vect)
 #endif
@@ -1047,11 +1060,11 @@ ISR(PCINT0_vect)
             stepDir = 1;
             newSpeed = cmd.st4RAIVal[0]; //------------ 1.25x sidereal rate
 setRASpeed:
-            cmd.currentIVal[RA] = newSpeed;
             if (stopped) {
                 cmd.stepDir[RA] = stepDir; //set step direction
                 cmd.dir[RA] = dir; //set direction
                 cmd.GVal[RA] = 1; //slew mode
+		cmd.IVal[RA] = newSpeed;
                 motorStartRA();
             } else if (cmd.stopSpeed[RA] < cmd.currentIVal[RA]) {
                 cmd.stopSpeed[RA] = cmd.currentIVal[RA]; //ensure that RA doesn't stop.
@@ -1078,9 +1091,9 @@ ignoreRAST4:
 setDECSpeed:
             cmd.stepDir[DC] = stepDir; //set step direction
             cmd.dir[DC] = dir; //set direction
-            cmd.currentIVal[DC] = cmd.st4DecIVal; //move at 0.25x sidereal rate
             cmd.GVal[DC] = 1; //slew mode
-            motorStartDC();
+	    cmd.IVal[DC] = cmd.st4DecIVal;
+            motorStartDC(); // TODO: this resets cmd.currentIVal[DC] !!!
         } else {
             cmd.currentIVal[DC] = cmd.stopSpeed[DC] + 1;//make our target >stopSpeed so that ISRs bring us to a halt.
         }

@@ -53,8 +53,8 @@
 // RAMPS v1.4 used as stepper interface
 //GPIO Pins:
 #define gpioPin_0_Define 21  //IO0 [ATMega PD0] - Interrupt Capable
-#define gpioPin_1_Define 2   // standalone mode enable
-#define gpioPin_2_Define 3   // standalone mode speed select
+#define gpioPin_1_Define 19   // standalone mode enable
+#define gpioPin_2_Define 18   // standalone mode speed select
 
 //Status Pins:
 #define statusPin_Define 13
@@ -123,6 +123,11 @@
 #define ST4AddPin_1_Define 63 //Analog 9
 #define ST4SubPin_0_Define 64 //Analog 10
 #define ST4SubPin_1_Define 65 //Analog 11
+#elif defined(RAMPSv14)
+#define ST4AddPin_0_Define 2
+#define ST4AddPin_1_Define 15
+#define ST4SubPin_0_Define 3
+#define ST4SubPin_1_Define 14
 #else
 #define ST4AddPin_0_Define 50
 #define ST4AddPin_1_Define 51
